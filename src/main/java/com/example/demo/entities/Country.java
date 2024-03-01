@@ -19,7 +19,7 @@ public class Country {
     @Column(name = "country_id")
     private Long id;
     @Column(name = "country")
-    private String countryName;
+    private String country_name;
     @Column(name = "create_date")
     @CreationTimestamp
     private Date createDate;

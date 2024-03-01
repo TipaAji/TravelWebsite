@@ -26,7 +26,7 @@ public class Customer {
     @Column(name = "address")
     private String address;
     @Column(name = "postal_code")
-    private String postalCode;
+    private String postal_code;
     @Column(name = "phone")
     private String phone;
     @Column(name = "create_date")
@@ -35,7 +35,7 @@ public class Customer {
     @Column(name = "last_update")
     @UpdateTimestamp
     private Date lastUpdate;
-    @Column(name = "division_id")
+    @JoinColumn(name = "division_id")
     @ManyToOne
     private Division division;
     @OneToMany

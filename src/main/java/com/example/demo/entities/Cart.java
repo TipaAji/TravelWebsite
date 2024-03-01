@@ -23,9 +23,9 @@ public class Cart {
     @Column(name = "order_tracking_number")
     private String orderTrackingNumber;
     @Column(name = "package_price")
-    private BigDecimal packagePrice;
+    private BigDecimal package_price;
     @Column(name = "party_size")
-    private int partySize;
+    private int party_size;
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private StatusType status;
@@ -35,7 +35,7 @@ public class Cart {
     @Column(name = "last_update")
     @UpdateTimestamp
     private Date lastUpdate;
-    @Column(name = "customer_id")
+    @JoinColumn(name = "customer_id")
     @ManyToOne
     private Customer customer;
     @OneToMany

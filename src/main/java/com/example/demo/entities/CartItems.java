@@ -18,12 +18,12 @@ public class CartItems {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_item_id")
     private Long id;
-    @Column(name = "vacation_id")
+    @JoinColumn(name = "vacation_id")
     @ManyToOne
     private Vacation vacation;
     @ManyToMany
     private Set<Excursion> excursions;
-    @Column(name = "cart_id")
+    @JoinColumn(name = "cart_id")
     @ManyToOne
     private Cart cart;
     @Column(name = "create_date")
