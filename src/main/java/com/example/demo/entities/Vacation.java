@@ -29,10 +29,10 @@ public class Vacation {
     private String image_URL;
     @Column(name = "create_date")
     @CreationTimestamp
-    private Date createDate;
+    private Date create_date;
     @Column(name = "last_update")
     @UpdateTimestamp
-    private Date lastUpdate;
-    @OneToMany
+    private Date last_update;
+    @OneToMany(mappedBy = "vacation")
     private Set<Excursion> excursions;
 }

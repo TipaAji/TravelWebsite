@@ -27,13 +27,15 @@ public class Excursion {
     private String image_URL;
     @Column(name = "create_date")
     @CreationTimestamp
-    private Date createDate;
+    private Date create_date;
     @Column(name = "last_update")
     @UpdateTimestamp
-    private Date lastUpdate;
+    private Date last_update;
     @JoinColumn(name = "vacation_id")
     @ManyToOne
     private Vacation vacation;
     @ManyToMany
+    @JoinTable(name = "cartitems_excursions", joinColumns = @JoinColumn(name = "excursion_id"),
+            inverseJoinColumns = @JoinColumn(name = "cart_item_id"))
     private Set<CartItems> cartitems;
 }

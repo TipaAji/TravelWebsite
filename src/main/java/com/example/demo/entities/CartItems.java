@@ -21,7 +21,7 @@ public class CartItems {
     @JoinColumn(name = "vacation_id")
     @ManyToOne
     private Vacation vacation;
-    @ManyToMany
+    @ManyToMany(mappedBy = "cartitems")
     private Set<Excursion> excursions;
     @JoinColumn(name = "cart_id")
     @ManyToOne
