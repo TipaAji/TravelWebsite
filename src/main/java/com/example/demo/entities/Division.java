@@ -27,8 +27,8 @@ public class Division {
     @Column(name = "last_update")
     @UpdateTimestamp
     private Date lastUpdate;
-    @JoinColumn(name = "country_id", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "country_id", insertable = false, updatable = false, nullable = false)
     private Country country;
     @OneToMany(mappedBy = "division")
     private Set<Customer> customers;

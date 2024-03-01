@@ -41,7 +41,12 @@ public class CheckoutServiceImpl implements CheckoutService{
         cartRepository.save(cart);
 
         cart.setStatus(StatusType.ordered);
-
+        if(cartItems.isEmpty()){
+            return new PurchaseResponse("Cart is empty");
+        }
+        if(cart.getParty_size() < 1){
+            return new PurchaseResponse("Party Size must be positive");
+        }
         return new PurchaseResponse(orderTrackingNumber);
     }
 
