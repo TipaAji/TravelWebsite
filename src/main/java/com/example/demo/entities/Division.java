@@ -33,10 +33,10 @@ public class Division {
     @OneToMany(mappedBy = "division")
     private Set<Customer> customers;
     @Column(name = "country_id")
-    private long country_ID;
+    private long country_id;
 
     public void setCountry(Country country){
-        setCountry_ID((country.getId()));
+        setCountry_id((country.getId()));
         this.country = country;
     }
 }
