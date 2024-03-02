@@ -32,11 +32,11 @@ public class Customer {
     private String phone;
     @Column(name = "create_date")
     @CreationTimestamp
-    private Date createDate;
+    private Date create_date;
     @Column(name = "last_update")
     @UpdateTimestamp
-    private Date lastUpdate;
-    @JoinColumn(name = "division_id", nullable = false)
+    private Date last_update;
+    @JoinColumn(name = "division_id")
     @ManyToOne
     private Division division;
     @OneToMany(mappedBy = "customer")

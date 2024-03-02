@@ -20,23 +20,23 @@ public class Division {
     @Column(name = "division_id")
     private Long id;
     @Column(name = "division")
-    private String divisionName;
+    private String division_name;
     @Column(name = "create_date")
     @CreationTimestamp
-    private Date createDate;
+    private Date create_date;
     @Column(name = "last_update")
     @UpdateTimestamp
-    private Date lastUpdate;
+    private Date last_update;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id", insertable = false, updatable = false, nullable = false)
     private Country country;
     @OneToMany(mappedBy = "division")
     private Set<Customer> customers;
     @Column(name = "country_id")
-    private long country_id;
+    private long country_ID;
 
     public void setCountry(Country country){
-        setCountry_id((country.getId()));
+        setCountry_ID((country.getId()));
         this.country = country;
     }
 }

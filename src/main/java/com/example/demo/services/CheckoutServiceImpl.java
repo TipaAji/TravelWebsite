@@ -14,11 +14,11 @@ import java.util.UUID;
 
 @Service
 public class CheckoutServiceImpl implements CheckoutService{
-    private CustomerRepository customerRepository;
-    private CartRepository cartRepository;
 
-    public CheckoutServiceImpl(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
+    private final CartRepository cartRepository;
+
+    public CheckoutServiceImpl(CartRepository cartRepository) {
+        this.cartRepository = cartRepository;
     }
 
     @Override
@@ -30,23 +30,23 @@ public class CheckoutServiceImpl implements CheckoutService{
         cart.setOrderTrackingNumber(orderTrackingNumber);
 
         Set<CartItems> cartItems = purchase.getCartItems();
-        cartItems.forEach(cartItems1 -> cart.add(cartItems1));
+        cartItems.forEach(cart::add);
 
         cart.setCustomer(purchase.getCustomer());
         cart.setCartItem(purchase.getCartItems());
         Customer customer = purchase.getCustomer();
         customer.add(cart);
 
-        customerRepository.save(customer);
-        cartRepository.save(cart);
-
-        cart.setStatus(StatusType.ordered);
         if(cartItems.isEmpty()){
             return new PurchaseResponse("Cart is empty");
         }
         if(cart.getParty_size() < 1){
             return new PurchaseResponse("Party Size must be positive");
         }
+
+        cart.setStatus(StatusType.ordered);
+        cartRepository.save(cart);
+
         return new PurchaseResponse(orderTrackingNumber);
     }
 
