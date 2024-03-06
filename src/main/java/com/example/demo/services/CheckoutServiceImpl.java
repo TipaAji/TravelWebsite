@@ -1,10 +1,9 @@
 package com.example.demo.services;
 
+import com.example.demo.dao.CartItemRepository;
 import com.example.demo.dao.CartRepository;
-import com.example.demo.dao.CustomerRepository;
 import com.example.demo.entities.Cart;
-import com.example.demo.entities.CartItems;
-import com.example.demo.entities.Customer;
+import com.example.demo.entities.CartItem;
 import com.example.demo.entities.StatusType;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -16,9 +15,10 @@ import java.util.UUID;
 public class CheckoutServiceImpl implements CheckoutService{
 
     private final CartRepository cartRepository;
-
-    public CheckoutServiceImpl(CartRepository cartRepository) {
+    private final CartItemRepository cartItemRepository;
+    public CheckoutServiceImpl(CartRepository cartRepository, CartItemRepository cartItemRepository) {
         this.cartRepository = cartRepository;
+        this.cartItemRepository = cartItemRepository;
     }
 
     @Override
@@ -29,13 +29,16 @@ public class CheckoutServiceImpl implements CheckoutService{
         String orderTrackingNumber = generateOrderTrackingNumber();
         cart.setOrderTrackingNumber(orderTrackingNumber);
 
-        Set<CartItems> cartItems = purchase.getCartItems();
-        cartItems.forEach(cart::add);
+        Set<CartItem> cartItems = purchase.getCartItems();
+        cartItems.forEach(item -> {cart.add(item);
+            item.setCart(cart);
+            item.setVacation(item.getVacation());
+            item.getExcursions().forEach(excursion -> {excursion.setVacation(item.getVacation());});
+        });
 
-        cart.setCustomer(purchase.getCustomer());
-        cart.setCartItem(purchase.getCartItems());
-        Customer customer = purchase.getCustomer();
-        customer.add(cart);
+        //cart.setCustomer(purchase.getCustomer());
+        cart.setCartItems(cartItems);
+
 
         if(cartItems.isEmpty()){
             return new PurchaseResponse("Cart is empty");
@@ -46,7 +49,7 @@ public class CheckoutServiceImpl implements CheckoutService{
 
         cart.setStatus(StatusType.ordered);
         cartRepository.save(cart);
-
+        //cartItemRepository.saveAll(cartItems);
         return new PurchaseResponse(orderTrackingNumber);
     }
 

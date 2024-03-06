@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -35,4 +36,7 @@ public class Vacation {
     private Date last_update;
     @OneToMany(mappedBy = "vacation")
     private Set<Excursion> excursions;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "vacation_id")
+    private Set<CartItem> cartItems = new HashSet<>();
 }
